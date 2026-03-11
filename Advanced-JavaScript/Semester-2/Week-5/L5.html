@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lecture 3 - Callbacks and Promises
+        </title>
+        <style>
+            </style>
+    </head>
+    <button> Click me</button> 
+    <body> 
+        
+        <script>
+            let btn = document.querySelector('button');
+
+            let stopAlarm = setTimeout(() => {
+                alert("Wake Up! Time to Study!");
+            }, 5000);
+
+            function stopAlarmFunction() {
+                clearTimeout(stopAlarm);
+                alert("Alarm Stopped. You can sleep now!");
+            }
+
+            btn.addEventListener('click', stopAlarmFunction);
+
+            
+        </script>
+        
+	</body>
+</html>
