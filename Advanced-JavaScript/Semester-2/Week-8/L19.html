@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator function</title>
+
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+
+    <script>
+        // function* trafficlight(){
+
+        //     yield "Red"
+
+        //     yield "Yellow"
+
+        //     yield "Green"
+
+        // }
+        // let result = trafficlight()
+
+        // console.log(result.next()) // {value: "Red", done: false}
+        // console.log(result.next()) // {value: "Yellow", done: false}
+        // console.log(result.next()) // {value: "Green", done: false}
+        // console.log(result.next()) // {value: undefined, done: true}
+
+        function* myEducation(){
+            yield " 10th Grade : 90%"
+            yield " 12th Grade : 80%"
+            yield " B.Tech 1st SEM: 8.61 SGPA"
+
+        }
+        let result = myEducation()
+        console.log(result.next()) // {value: " 10th Grade : 90%", done: false}
+        console.log(result.next()) // {value: " 12th Grade : 80%", done: false}
+        console.log(result.next()) // {value: " B.Tech 1st SEM: 8.61 SGPA", done: false}
+        console.log(result.next()) // {value: undefined, done: true}
+
+    </script>
+    <!-- generator func can pause their execution  -->
+    <!-- yield is similar to return -->
+
+</body>
+</html>

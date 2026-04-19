@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lecture 10 -  Promises
+        </title>
+        <style>
+            </style>
+    </head>
+    
+    <body>
+        
+        <script>
+            function returnPromise(){
+                return new  Promise((resolve,reject)=>{
+                    setTimeout(()=>{
+                        let flag = false;
+                        if (flag){
+                            resolve("Promise Fullfilled")
+
+                        }else{
+                            reject("Promise Rejected")
+                        }
+
+                    },5000)
+
+                })
+            }
+
+            // let temp = returnPromise();
+            // console.log(temp) // will show pending
+
+            // setTimeout(()=>{
+            //     console.log(temp)
+            // },5000)
+            
+            returnPromise().then(result=>console.log(result)).catch // will make sure to remove that uncaught error
+            (err=>console.log(err))
+            
+        </script>
+        
+	</body>
+</html>

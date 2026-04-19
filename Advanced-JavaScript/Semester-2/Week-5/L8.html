@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Event Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+    :root {
+        --bg-main: #0b0f1a;
+        --bg-card: rgba(255, 255, 255, 0.04);
+
+        --primary: #7c7cff;
+        --secondary: #4f46e5;
+
+        --border: rgba(255, 255, 255, 0.08);
+        --text-main: #f8fafc;
+        --text-muted: rgba(255, 255, 255, 0.65);
+
+        --radius: 14px;
+        --blur: 16px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+
+        min-height: 100vh;
+
+        background:
+            radial-gradient(circle at top left, #1e1b4b, transparent),
+            radial-gradient(circle at bottom right, #020617, transparent),
+            var(--bg-main);
+
+        padding: 40px;
+
+        color: var(--text-main);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 35px;
+
+        font-size: 36px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+
+        /* Gradient Text */
+        background: linear-gradient(90deg, #7c7cff, #a855f7, #4f46e5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        /* Glow Effect */
+        text-shadow:
+            0 0 10px rgba(124, 124, 255, 0.4),
+            0 0 20px rgba(168, 85, 247, 0.2);
+
+        /* Animation */
+        animation: titleFade 1.2s ease-in-out;
+    }
+
+
+                                                                                                                    /* Layout */
+    .container {
+        max-width: 1100px;
+        margin: auto;
+
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+
+        gap: 30px;
+    }
+
+                                                                                                                    /* Cards */
+    .card {
+        background: var(--bg-card);
+
+        backdrop-filter: blur(var(--blur));
+
+        border: 1px solid var(--border);
+
+        border-radius: var(--radius);
+
+        padding: 26px;
+
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.6),
+            inset 0 0 0.5px rgba(255, 255, 255, 0.2);
+
+        transition: all 0.35s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+
+        box-shadow:
+            0 20px 45px rgba(0, 0, 0, 0.8),
+            0 0 25px rgba(124, 124, 255, 0.15);
+    }
+
+    .card h3 {
+        margin-bottom: 20px;
+
+        font-weight: 500;
+
+        color: var(--text-main);
+    }
+
+                                                                                                            /* Form */
+    form {
+        display: flex;
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+    label {
+        font-size: 13px;
+
+        color: var(--text-muted);
+    }
+
+    input,
+    select,
+    textarea {
+
+        padding: 12px 14px;
+
+        border-radius: 9px;
+
+        border: 1px solid var(--border);
+
+        background: rgba(255, 255, 255, 0.03);
+
+        color: var(--text-main);
+
+        font-family: inherit;
+
+        outline: none;
+
+        transition: all 0.3s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+
+        border-color: var(--primary);
+
+        box-shadow: 0 0 0 2px rgba(124, 124, 255, 0.25);
+
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    textarea {
+        resize: none;
+
+        min-height: 90px;
+    }
+
+                                                                                                        /* Buttons */
+    button {
+
+        padding: 12px;
+
+        border-radius: 9px;
+
+        border: none;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--primary),
+                var(--secondary)
+            );
+
+        color: white;
+
+        font-weight: 500;
+
+        letter-spacing: 0.3px;
+
+        cursor: pointer;
+
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 22px rgba(79, 70, 229, 0.35),
+            0 0 12px rgba(124, 124, 255, 0.25);
+    }
+
+    button:active {
+        transform: scale(0.96);
+    }
+
+                                                                                                            /* Events  */
+    .actions {
+        display: flex;
+
+        gap: 10px;
+
+        margin-bottom: 15px;
+    }
+    .actions button {
+        flex: 1;
+    }
+
+
+
+    #event-container {
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 14px;
+    }
+
+    #eventCategory{
+        background-color: #231d36;
+
+    }
+
+    .event-card {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 10px;
+
+        padding: 16px;
+
+        position: relative;
+
+        animation: fadeIn 0.4s ease;
+    }
+
+    .event-card h4 {
+
+        font-size: 15px;
+
+        margin-bottom: 4px;
+    }
+
+    .event-card span {
+
+        font-size: 12px;
+
+        color: var(--text-muted);
+    }
+
+    .event-card p {
+
+        margin-top: 8px;
+
+        font-size: 13px;
+
+        line-height: 1.4;
+
+        color: var(--text-muted);
+    }
+
+                                                                                                        /* Delete Button */
+    .delete-btn {
+
+        position: absolute;
+
+        top: 10px;
+        right: 10px;
+
+        padding: 4px 8px;
+
+        font-size: 11px;
+
+        background: #7f1d1d;
+
+        border-radius: 6px;
+    }
+
+    .delete-btn:hover {
+
+        background: #dc2626;
+
+        box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+    }
+
+                                                                                                     /* Animations */
+    @keyframes fadeIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+                                                                                                    /*  Media */
+    @media (max-width: 900px) {
+
+        .container {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+                                                                                                    /*Key Display Panel*/
+
+    #key-panel {
+
+        position: fixed;
+
+        bottom: 20px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        background: rgba(15, 23, 42, 0.9);
+
+        backdrop-filter: blur(12px);
+
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        border-radius: 30px;
+
+        padding: 10px 20px;
+
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        font-size: 14px;
+
+        color: white;
+
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+
+        z-index: 9999;
+    }
+
+    #key-output {
+
+        color: #7c7cff;
+
+        font-weight: 600;
+
+        min-width: 60px;
+
+        text-align: center;
+
+        transition: all 0.2s ease;
+    }
+
+                                                                                                /* Animation when key changes */
+    .key-active {
+
+        transform: scale(1.2);
+
+        text-shadow: 0 0 8px rgba(124, 124, 255, 0.8);
+    }
+
+    @keyframes titleFade {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+    <h1>🎯 Smart Event Dashboard</h1>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h3>Add New Event</h3>
+
+            <form>
+
+                <label>Event Title</label>
+                <input type="text" id="eventTitle">
+
+                <label>Event Date</label>
+                <input type="date" id="eventDate">
+
+                <label>Category</label>
+                <select id="eventCategory">
+                    <option value="Conference">Conference</option>
+                    <option value="Webinar">Webinar</option>
+                    <option value="Meetup">Meetup</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Social">Social</option>
+                </select>
+
+                <label>Description</label>
+                <textarea id="eventDescription"></textarea>
+
+                <button type="submit">Add Event</button>
+
+            </form>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>My Events</h3>
+
+            <div class="actions">
+                <button id="clear-btn">Clear All</button>
+                <button id="sample-Btn">Add Sample Events</button>
+            </div>
+
+            <div id="event-container">
+                <p>No events yet. Add your first event!</p>
+            </div>
+
+        </div>
+
+
+        <div id="key-panel">
+            <span>Typing:</span>
+            <span id="key-output">None</span>
+        </div>
+
+    </div>
+
+    <script>
+
+        let form = document.querySelector("form");
+
+        let eventTitle = document.querySelector("#eventTitle");
+        let eventDate = document.querySelector("#eventDate");
+        let eventCategory = document.querySelector("#eventCategory");
+        let eventDescription = document.querySelector("#eventDescription");
+
+        let eventContainer = document.querySelector("#event-container");
+        let sampleBtn = document.querySelector("#sample-Btn");
+        
+
+        let clearBtn = document.querySelector("#clear-btn");
+
+        let isEmpty = true;
+
+
+        function addEventFunction(e) {
+
+            e.preventDefault();
+
+            let card = document.createElement("div");
+
+            card.classList.add("event-card");
+
+            card.innerHTML = `
+                <button class="delete-btn">X</button>
+
+                <h4>${eventTitle.value}</h4>
+
+                <span>${eventDate.value}</span><br>
+
+                <span>${eventCategory.value}</span>
+
+                <p>${eventDescription.value}</p>
+            `;
+
+            if (isEmpty) {
+                eventContainer.innerHTML = "";
+                isEmpty = false;
+            }
+
+            eventContainer.appendChild(card);
+
+                                                                                                     // Delete button
+            card.querySelector(".delete-btn").addEventListener("click", function () {
+
+                card.remove();
+
+                if (eventContainer.children.length === 0) {
+                    eventContainer.innerHTML = "<p>No events yet. Add your first event!</p>";
+                    isEmpty = true;
+                }
+
+            });
+
+            form.reset();
+
+
+        }
+
+
+        form.addEventListener("submit", addEventFunction);
+
+
+        clearBtn.addEventListener("click", function () {
+
+            eventContainer.innerHTML = "<p>No events yet. Add your first event!</p>";
+
+            isEmpty = true;
+
+        });
+                                                                                                /* Add Sample Event  */
+
+        sampleBtn.addEventListener("click", function () {
+
+            // Fixed sample data
+            let sampleTitle = "Future of AI";
+            let sampleDate = "2026-03-15";
+            let sampleCategory = "Webinar";
+            let sampleDescription = "This is a demo sample event.";
+
+            let card = document.createElement("div");
+
+            card.classList.add("event-card");
+
+            card.innerHTML = `
+                <button class="delete-btn">X</button>
+
+                <h4>${sampleTitle}</h4>
+
+                <span>${sampleDate}</span><br>
+
+                <span>${sampleCategory}</span>
+
+                <p>${sampleDescription}</p>
+            `;
+
+
+            if (isEmpty) {
+                eventContainer.innerHTML = "";
+                isEmpty = false;
+            }
+
+            eventContainer.appendChild(card);
+
+                                                                                        // Delete feature
+            card.querySelector(".delete-btn").addEventListener("click", function () {
+
+                card.remove();
+
+                if (eventContainer.children.length === 0) {
+
+                    eventContainer.innerHTML =
+                        "<p>No events yet. Add your first event!</p>";
+
+                    isEmpty = true;
+                }
+
+            });
+
+        });
+
+
+
+                                                                                                    /*  Live Key Display */
+
+        const keyOutput = document.getElementById("key-output");
+
+        document.addEventListener("keydown", function (event) {
+
+            let keyName = event.key;
+            if (keyName === " ") keyName = "Space";
+            if (keyName === "Enter") keyName = "Enter ↵";
+            if (keyName === "Backspace") keyName = "⌫ Backspace";
+
+            keyOutput.textContent = keyName;
+
+            keyOutput.classList.add("key-active");
+
+            setTimeout(function () {
+                keyOutput.classList.remove("key-active");
+            }, 150);
+
+        });
+
+
+    </script>
+
+</body>
+</html>

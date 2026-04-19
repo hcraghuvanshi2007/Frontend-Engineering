@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lecture 16 - Async , Await and Promise Chaining </title>
+        
+        <style>
+            
+            </style>
+    </head>
+    
+    <body>
+        
+        <script>
+           let cart = ["Laptop" , "Mobile" , "Earphone"];
+
+           function createOrder(cart){
+                console.log("Creating Order...");
+                return new Promise((resolve,reject)=>{
+                    setTimeout(()=>{
+                        if(cart.length>0){  
+                            resolve({
+                                orderID:1234,
+                                amount:2500
+                            })
+                        }else{
+                            reject("Cart is Empty")
+                        }
+                    },5000)
+                })
+
+
+            }
+
+            function makePayment(order){
+                console.log("Making Payment...");
+                return new Promise((resolve,reject)=>{
+                    let network = true;
+                    setTimeout(()=>{
+                        if(network){
+                            resolve({
+                                ...order,
+                                paymentID:"pay123"
+                            })
+                        }else{
+                            reject("Payment failed Network Issue")
+                        }
+                    },5000)
+                })
+            }
+
+            function updateInventory(order){
+                console.log("Updating Inventory...");
+                return new Promise((resolve,reject)=>{
+                    let inventoryAvailable = true;
+                    setTimeout(()=>{
+                        if(inventoryAvailable){
+                            resolve({
+                                ...order,
+                                updatedInventory:true
+                            })
+                        }else{
+                            reject("Inventory Unavailable")
+                        }
+                    },5000)
+                })
+            }
+
+            function orderStatus(order){
+                console.log("Confirming Order...");
+                return new Promise((resolve,reject)=>{
+                    let message = true;
+                    setTimeout(()=>{
+                        if(message){
+                            resolve({
+                                ...order,
+                                orderStatus:"Confirm"
+                            })
+                        }else{
+                            reject("Order Status Failed")
+                        }
+                    },5000)
+                })
+            }
+
+
+        //  Applying async , await 
+
+                async function processOrder(cart){
+                    try{
+                        let order = await createOrder(cart);
+                        console.log("Order Created Successfully" , order);
+    
+                        let payment = await makePayment(order);
+                        console.log("Payment Successful" , payment);
+    
+                        let inventory = await updateInventory(payment);
+                        console.log("Inventory Updated" , inventory);
+    
+                        let status = await orderStatus(inventory);
+                        console.log("Order Status Updated" , status);
+                    }catch(error){
+                        console.log("Error :" , error);
+                    }
+                }
+                processOrder(cart);
+                        //  try catch block is used to handle the error in async , await
+                        //  be careful for the arguments passed in functions
+                        
+        //  Applying Promise Chaining
+
+            // createOrder(cart)
+            //     .then((order)=>{
+            //         console.log("Order Created Successfully" , order);
+            //         return makePayment(order);
+            //     })
+            //     .then((order)=>{
+            //         console.log("Payment Successful" , order);
+            //         return updateInventory(order);
+            //     })
+            //     .then((order)=>{
+            //         console.log("Inventory Updated" , order);
+            //         return orderStatus(order);
+            //     })
+            //     .then((order)=>{
+            //         console.log("Order Status Updated" , order);
+            //     })
+            //     .catch((error)=>{
+            //         console.log("Error :" , error);
+            //     })
+
+        </script>
+        
+	</body>
+</html>

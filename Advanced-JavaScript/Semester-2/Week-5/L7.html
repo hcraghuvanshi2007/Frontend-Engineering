@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lecture 3 - Callbacks and Promises
+        </title>
+        <style>
+            h3 {
+                color: rgb(37, 34, 34);
+                font-size:40px;
+            }
+            h1 {
+                font-size: 50px;
+                color: rgb(72, 125, 159);
+                text-align: center;
+            }
+            button {
+                font-size: 20px;
+                margin: 5px;
+                padding: 10px;
+                box-shadow: 2px 2px 5px grey;
+                color: rgb(190, 155, 249);
+                border: 3px solid rgb(176, 176, 176);
+
+                
+            }
+            div {
+                text-align: center;
+                border: 8px solid rgb(146, 190, 238);
+                border-radius: 40px;
+                width: 600px;
+                margin: auto;
+                padding: 20px;
+                background-color: rgb(246, 244, 244);
+                box-shadow: 6px 6px 10px rgb(0, 0, 0);
+
+
+            }
+            </style>
+    </head> 
+    <body>
+        <div>
+        <h3> Stopwatch </h3>
+        <h1> 0 min :0 sec </h1>
+        <!-- M:S -->
+        
+        <button id = "startBtn"> Start Timer </button>
+        <button id = "stopBtn"> Stop Timer </button>
+        <button id = "resetBtn"> Reset Timer </button>
+        </div>
+        <script>
+            let h1 = document.querySelector('h1');
+            let startBtn = document.querySelectorAll("#startBtn");
+            let stopBtn = document.querySelectorAll("#stopBtn");
+            let resetBtn = document.querySelectorAll("#resetBtn");
+
+            let seconds = 0;
+            let minutes = 0;
+
+            function startTimer() {
+                timer = setInterval(() => {
+                    seconds++;
+                    if (seconds == 60) {
+                        minutes++;
+                        seconds = 0;
+                    }
+                    h1.textContent = `${minutes} min:${seconds} sec`;
+                }, 1000);
+            }
+
+            function stopTimer() {
+                clearInterval(timer);
+
+            }
+
+            function resetTimer() {
+                clearInterval(timer);
+                seconds = 0;
+                minutes = 0;
+                h1.textContent = `0:0`;
+            }
+
+            startBtn[0].addEventListener('click', startTimer);
+            stopBtn[0].addEventListener('click', stopTimer);
+            resetBtn[0].addEventListener('click', resetTimer);
+
+
+        </script>
+        
+	</body>
+</html>

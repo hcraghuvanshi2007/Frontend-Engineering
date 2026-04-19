@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        async function getProducts(){
+           let response =  await fetch('https://dummyjson.com/products')
+            // console.log(response)
+           let data = await response.json()
+            // console.log(data)
+            // console.log(data.products)
+            // console.log(data.skip)
+            let element = data.products
+            element.forEach((item,index) => {
+                // console.log(item))
+                // console.log(item,index)
+                // console.log(item.title,index)
+                console.log(item.dimensions.width,index)
+
+            })
+
+
+
+        }
+
+        getProducts()
+
+    </script>
+    
+</body>
+</html>

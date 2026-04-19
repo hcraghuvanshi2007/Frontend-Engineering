@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lecture 10 -  Promises
+        </title>
+        <style>
+            </style>
+    </head>
+    
+    <body>
+        
+        <script>
+            // let flag = true; // if false : will also return error called : uncaught 
+            // let wada = new Promise((resolve,reject)=>{
+
+            //     if (flag){
+            //         resolve("Pura hua wada")
+
+            //     }else{
+            //         reject("kya hua tera wada")
+            //     }
+
+            // })
+            // wada.then(result=>console.log(result)).catch // will make sure to remove that uncaught error
+            // (err=>console.log(err))
+            // console.log(wada)
+            let time = 9;
+            let flag = true;
+            let form = document.querySelector("tome");
+
+            let order = new Promise((resolve,reject)=>{
+
+                if (flag){
+                    resolve("Order Done")
+
+                }else{
+                    reject("Cancelled")
+                }
+
+            })
+            order.then(result=>console.log(result)).catch // will make sure to remove that uncaught error
+            (err=>console.log(err))
+            console.log(order)
+            
+        </script>
+        
+	</body>
+</html>
